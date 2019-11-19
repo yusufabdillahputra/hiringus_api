@@ -1,9 +1,9 @@
 const path = require('../config/path')
 const Router = require('express').Router()
-
-const { get } = require(`${path}/controllers/home`)
+const controller = 'home'
+const { get } = require(`${path}/controllers/${controller}`)
 
 Router
-  .get('/home', get)
+  .get('/', get)
 
 module.exports = Router
