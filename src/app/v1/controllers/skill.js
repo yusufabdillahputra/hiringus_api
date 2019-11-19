@@ -1,11 +1,12 @@
 const { response } = require('../../../helper/response')
-const skillModel = require('../models/skill')
+const skillHeaderModel = require('../models/skillHeader')
+const skillBodyModel = require('../models/skillBody')
 
 module.exports = {
 
-  createData: async (req, res) => {
+  createHeaderData: async (req, res) => {
     try {
-      const result = await skillModel.createData(req.body)
+      const result = await skillHeaderModel.createData(req.body)
       response(res, 200, result)
     } catch (error) {
       console.log(error)
@@ -13,9 +14,9 @@ module.exports = {
     }
   },
 
-  readAll: async (req, res) => {
+  readHeaderAll: async (req, res) => {
     try {
-      const result = await skillModel.readAll()
+      const result = await skillHeaderModel.readAll()
       response(res, 200, result)
     } catch (error) {
       console.log(error)
@@ -23,9 +24,9 @@ module.exports = {
     }
   },
 
-  readById: async (req, res) => {
+  readHeaderById: async (req, res) => {
     try {
-      const result = await skillModel.readById(req.params)
+      const result = await skillHeaderModel.readById(req.params)
       response(res, 200, result)
     } catch (error) {
       console.log(error)
@@ -33,9 +34,9 @@ module.exports = {
     }
   },
 
-  readByName: async (req, res) => {
+  readHeaderByName: async (req, res) => {
     try {
-      const result = await skillModel.readByName(req.params)
+      const result = await skillHeaderModel.readByName(req.params)
       response(res, 200, result)
     } catch (error) {
       console.log(error)
@@ -43,9 +44,9 @@ module.exports = {
     }
   },
 
-  readTrash: async (req, res) => {
+  readHeaderTrash: async (req, res) => {
     try {
-      const result = await skillModel.readTrash()
+      const result = await skillHeaderModel.readTrash()
       response(res, 200, result)
     } catch (error) {
       console.log(error)
@@ -53,9 +54,9 @@ module.exports = {
     }
   },
 
-  updateById: async (req, res) => {
+  updateHeaderById: async (req, res) => {
     try {
-      const result = await skillModel.updateById(req.body, req.params)
+      const result = await skillHeaderModel.updateById(req.body, req.params)
       response(res, 200, result)
     } catch (error) {
       console.log(error)
@@ -63,9 +64,9 @@ module.exports = {
     }
   },
 
-  deleteDataById: async (req, res) => {
+  deleteHeaderDataById: async (req, res) => {
     try {
-      const result = await skillModel.deleteDataById(req.params)
+      const result = await skillHeaderModel.deleteDataById(req.params)
       response(res, 200, result)
     } catch (error) {
       console.log(error)
@@ -73,9 +74,51 @@ module.exports = {
     }
   },
 
-  softDeleteDataById: async (req, res) => {
+  softDeleteHeaderDataById: async (req, res) => {
     try {
-      const result = await skillModel.softDeleteDataById()
+      const result = await skillHeaderModel.softDeleteDataById()
+      response(res, 200, result)
+    } catch (error) {
+      console.log(error)
+      response(res, 500, error)
+    }
+  },
+
+  createBodyData: async (req, res) => {
+    try {
+      const result = {}
+      result.delete = await skillBodyModel.deleteDataByEngineer(req.params)
+      result.create = await skillBodyModel.createData(req.body)
+      response(res, 200, result)
+    } catch (error) {
+      console.log(error)
+      response(res, 500, error)
+    }
+  },
+
+  readBodyAll: async (req, res) => {
+    try {
+      const result = await skillBodyModel.readAll()
+      response(res, 200, result)
+    } catch (error) {
+      console.log(error)
+      response(res, 500, error)
+    }
+  },
+
+  readBodyByEngineer: async (req, res) => {
+    try {
+      const result = await skillBodyModel.readByEngineer(req.params)
+      response(res, 200, result)
+    } catch (error) {
+      console.log(error)
+      response(res, 500, error)
+    }
+  },
+
+  readBodyBySkill: async (req, res) => {
+    try {
+      const result = await skillBodyModel.readBySkill(req.params)
       response(res, 200, result)
     } catch (error) {
       console.log(error)

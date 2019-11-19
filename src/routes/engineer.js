@@ -6,6 +6,7 @@ const {
   readAll,
   readById,
   readByName,
+  readByCompany,
   readTrash,
   updateById,
   deleteDataById,
@@ -17,8 +18,9 @@ Router
   .get(`/${controller}`, readAll)
   .get(`/${controller}/id/:id_engineer`, readById)
   .get(`/${controller}/name/:name_engineer`, readByName)
+  .get(`/${controller}/company/:name_company`, readByCompany)
   .get(`/${controller}/trash`, readTrash)
-  .put(`/${controller}/:id_engineer`, updateById)
+  .put(`/${controller}/id/:id_engineer`, updateById)
   .delete(`/${controller}/id/:id_engineer`, deleteDataById)
   .put(`/${controller}/del/:id_engineer`, softDeleteDataById)
 
