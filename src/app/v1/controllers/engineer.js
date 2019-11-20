@@ -91,6 +91,36 @@ module.exports = {
       console.log(error)
       response(res, 500, error)
     }
+  },
+
+  sortByName: async (req, res) => {
+    try {
+      const result = await engineerModel.sortBy('name_engineer')
+      response(res, 200, result)
+    } catch (error) {
+      console.log(error)
+      response(res, 500, error)
+    }
+  },
+
+  sortBySkill: async (req, res) => {
+    try {
+      const result = await engineerModel.sortByBodySkill('name_skill')
+      response(res, 200, result)
+    } catch (error) {
+      console.log(error)
+      response(res, 500, error)
+    }
+  },
+
+  sortByUpdatedAt: async (req, res) => {
+    try {
+      const result = await engineerModel.sortBy('updated_at')
+      response(res, 200, result)
+    } catch (error) {
+      console.log(error)
+      response(res, 500, error)
+    }
   }
 
 }

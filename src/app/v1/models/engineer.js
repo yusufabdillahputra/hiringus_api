@@ -51,7 +51,24 @@ module.exports = {
         resolve(result)
       })
     })
+  },
+  sortBy: (field) => {
+    return new Promise((resolve, reject) => {
+      conn.query(`SELECT * FROM ${view} ORDER BY ${field}`, (err, result) => {
+        if (err) reject(new Error(err))
+        resolve(result)
+      })
+    })
+  },
+  sortByBodySkill: (field) => {
+    return new Promise((resolve, reject) => {
+      conn.query(`SELECT * FROM vw_bdy_skill ORDER BY ${field}`, (err, result) => {
+        if (err) reject(new Error(err))
+        resolve(result)
+      })
+    })
   }
+
   // readTrash: () => {
   //   try {
   //     return 'ok'

@@ -2,9 +2,9 @@
   "name": "hiringus_api",
   "version": "1.0.0",
   "description": "Sandbox Backend with Express JS",
-  "main": "App.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon App.js"
+    "start": "nodemon app.js"
   },
   "author": "Yusuf Abdillah Putra",
   "license": "ISC",

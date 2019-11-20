@@ -1,4 +1,3 @@
-const path = require('../config/path')
 const Router = require('express').Router()
 const controller = 'engineer'
 const {
@@ -11,7 +10,7 @@ const {
   updateById,
   deleteDataById,
   softDeleteDataById
-} = require(`${path}/controllers/${controller}`)
+} = require(`../controllers/${controller}`)
 
 Router
   .post(`/${controller}`, createData)

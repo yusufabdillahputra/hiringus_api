@@ -1,7 +1,6 @@
-const path = require('../config/path')
 const Router = require('express').Router()
 const controller = 'home'
-const { get } = require(`${path}/controllers/${controller}`)
+const { get } = require(`../controllers/${controller}`)
 
 Router
   .get('/', get)

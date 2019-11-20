@@ -1,4 +1,3 @@
-const path = require('../config/path')
 const Router = require('express').Router()
 const controller = 'skill'
 const {
@@ -14,7 +13,7 @@ const {
   createBodyData,
   readBodyByEngineer,
   readBodyBySkill
-} = require(`${path}/controllers/${controller}`)
+} = require(`../controllers/${controller}`)
 
 Router
   .post(`/${controller}/head`, createHeaderData)
