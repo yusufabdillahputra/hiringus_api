@@ -1,5 +1,6 @@
 const Router = require('express').Router()
 const controller = 'users'
+const { verifyToken } = require('../middleware/authentication')
 const {
   createData,
   readAll,
@@ -13,6 +14,7 @@ const {
 } = require(`../controllers/${controller}`)
 
 Router
+  .all('/*', verifyToken)
   .post(`/${controller}`, createData)
   .get(`/${controller}`, readAll)
   .get(`/${controller}/id/:id_users`, readById)

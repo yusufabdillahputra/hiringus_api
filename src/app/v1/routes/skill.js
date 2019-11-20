@@ -1,4 +1,5 @@
 const Router = require('express').Router()
+const { verifyToken } = require('../middleware/authentication')
 const controller = 'skill'
 const {
   createHeaderData,
@@ -16,6 +17,7 @@ const {
 } = require(`../controllers/${controller}`)
 
 Router
+  .all('/*', verifyToken)
   .post(`/${controller}/head`, createHeaderData)
   .get(`/${controller}/head`, readHeaderAll)
   .get(`/${controller}/head/id/:id_skill`, readHeaderById)

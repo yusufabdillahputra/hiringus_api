@@ -8,6 +8,12 @@ module.exports = {
     } if (status === 500) {
       result.status = status
       result.message = resultModel
+    } if (status === 401) {
+      result.status = status
+      result.message = resultModel
+    } if (status === 403) {
+      result.status = status
+      result.message = resultModel
     }
     return res.status(result.status).json(result)
   }
