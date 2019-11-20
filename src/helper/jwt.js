@@ -1,7 +1,7 @@
 require('dotenv/config')
 const JWT = require('jsonwebtoken')
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
-const {response} = require('./response')
+const { response } = require('./response')
 
 module.exports = {
 
@@ -21,13 +21,12 @@ module.exports = {
     })
   },
 
-  completeToken: (req, res, next) => {
+  completeToken: (req, res) => {
     const token = req.headers.jwt
     JWT.decode(token, {
       complete: true
     })
-    response(res, 200, `${token} JWT is complete`)
-    next()
+    response(res, 200, `${token} JWT destroyed and successfully logout`)
   }
 
 }

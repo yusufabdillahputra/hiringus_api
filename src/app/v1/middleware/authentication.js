@@ -1,5 +1,4 @@
 const JWT = require('../../../helper/jwt')
-// const userModel = require('../models/users')
 
 module.exports = {
 

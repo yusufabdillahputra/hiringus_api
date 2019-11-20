@@ -20,6 +20,14 @@ module.exports = {
       })
     })
   },
+  readByLogin: (body) => {
+    return new Promise((resolve, reject) => {
+      conn.query(`SELECT ${primaryKey}, name_users, access_users FROM ${view} WHERE username_users = ? AND password_users = ? LIMIT 1`, [body.username_users, body.password_users], (err, result) => {
+        if (err) reject(new Error(err))
+        resolve(result)
+      })
+    })
+  },
   readById: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${view} WHERE ? `, params, (err, result) => {

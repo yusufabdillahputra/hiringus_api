@@ -16,7 +16,7 @@ const {
 Router
   .all('/*', verifyToken)
   .post(`/${controller}`, createData)
-  .get(`/${controller}`, readAll)
+  .get(`/${controller}/:limit?/:offset?`, readAll)
   .get(`/${controller}/id/:id_users`, readById)
   .get(`/${controller}/name/:name_users`, readByName)
   .get(`/${controller}/company/:name_company`, readByCompany)
