@@ -19,7 +19,7 @@ const {
 Router
   .all('/*', verifyToken)
   .post(`/${controller}/head`, createHeaderData)
-  .get(`/${controller}/head/:limit?/:offset?`, readHeaderAll)
+  .get(`/${controller}/head`, readHeaderAll)
   .get(`/${controller}/head/id/:id_skill`, readHeaderById)
   .get(`/${controller}/head/name/:name_skill`, readHeaderByName)
   .get(`/${controller}/head/trash`, readHeaderTrash)

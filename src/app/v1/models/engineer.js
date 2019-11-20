@@ -62,7 +62,7 @@ module.exports = {
   },
   readAllSortByBodySkill: (field) => {
     return new Promise((resolve, reject) => {
-      conn.query(`SELECT * FROM vw_bdy_skill ORDER BY ${field}`, (err, result) => {
+      conn.query(`SELECT * FROM vw_bdy_skill ORDER BY ${field} `, (err, result) => {
         if (err) reject(new Error(err))
         resolve(result)
       })
