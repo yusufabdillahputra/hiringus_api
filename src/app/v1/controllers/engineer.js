@@ -93,9 +93,9 @@ module.exports = {
     }
   },
 
-  sortByName: async (req, res) => {
+  readAllSortByName: async (req, res) => {
     try {
-      const result = await engineerModel.sortBy('name_engineer')
+      const result = await engineerModel.readAllSortBy('name_engineer')
       response(res, 200, result)
     } catch (error) {
       console.log(error)
@@ -103,9 +103,9 @@ module.exports = {
     }
   },
 
-  sortBySkill: async (req, res) => {
+  readAllSortBySkill: async (req, res) => {
     try {
-      const result = await engineerModel.sortByBodySkill('name_skill')
+      const result = await engineerModel.readAllSortByBodySkill('name_skill')
       response(res, 200, result)
     } catch (error) {
       console.log(error)
@@ -113,9 +113,9 @@ module.exports = {
     }
   },
 
-  sortByUpdatedAt: async (req, res) => {
+  readAllSortByUpdatedAt: async (req, res) => {
     try {
-      const result = await engineerModel.sortBy('updated_at')
+      const result = await engineerModel.readAllSortBy('updated_at')
       response(res, 200, result)
     } catch (error) {
       console.log(error)

@@ -9,7 +9,10 @@ const {
   readTrash,
   updateById,
   deleteDataById,
-  softDeleteDataById
+  softDeleteDataById,
+  readAllSortByName,
+  readAllSortBySkill,
+  readAllSortByUpdatedAt
 } = require(`../controllers/${controller}`)
 
 Router
@@ -19,6 +22,9 @@ Router
   .get(`/${controller}/name/:name_engineer`, readByName)
   .get(`/${controller}/company/:name_company`, readByCompany)
   .get(`/${controller}/trash`, readTrash)
+  .get(`/${controller}/sort/name`, readAllSortByName)
+  .get(`/${controller}/sort/skill`, readAllSortBySkill)
+  .get(`/${controller}/sort/updated`, readAllSortByUpdatedAt)
   .put(`/${controller}/id/:id_engineer`, updateById)
   .delete(`/${controller}/id/:id_engineer`, deleteDataById)
   .put(`/${controller}/del/:id_engineer`, softDeleteDataById)

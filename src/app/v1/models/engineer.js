@@ -52,7 +52,7 @@ module.exports = {
       })
     })
   },
-  sortBy: (field) => {
+  readAllSortBy: (field) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${view} ORDER BY ${field}`, (err, result) => {
         if (err) reject(new Error(err))
@@ -60,7 +60,7 @@ module.exports = {
       })
     })
   },
-  sortByBodySkill: (field) => {
+  readAllSortByBodySkill: (field) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM vw_bdy_skill ORDER BY ${field}`, (err, result) => {
         if (err) reject(new Error(err))
