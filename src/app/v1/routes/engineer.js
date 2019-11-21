@@ -1,5 +1,6 @@
 const Router = require('express').Router()
-const { verifyToken } = require('../middleware/authentication')
+const {verifyToken} = require('../middleware/authentication')
+const {verifyAuthorization} = require('../middleware/authorization')
 const controller = 'engineer'
 const {
   createData,
@@ -17,18 +18,18 @@ const {
 } = require(`../controllers/${controller}`)
 
 Router
-  .all('/*', verifyToken)
-  .post(`/${controller}`, createData)
-  .get(`/${controller}`, readAll)
-  .get(`/${controller}/id/:id_engineer`, readById)
-  .get(`/${controller}/name/:name_engineer`, readByName)
-  .get(`/${controller}/company/:name_company`, readByCompany)
-  .get(`/${controller}/trash`, readTrash)
-  .get(`/${controller}/sort/name`, readAllSortByName)
-  .get(`/${controller}/sort/skill`, readAllSortBySkill)
-  .get(`/${controller}/sort/updated`, readAllSortByUpdatedAt)
-  .put(`/${controller}/id/:id_engineer`, updateById)
-  .delete(`/${controller}/id/:id_engineer`, deleteDataById)
-  .put(`/${controller}/del/:id_engineer`, softDeleteDataById)
+  .all(`/${controller}/*`, verifyToken)
+  .post(`/${controller}`, verifyAuthorization, createData)
+  .get(`/${controller}`, verifyAuthorization, readAll)
+  .get(`/${controller}/id/:id_engineer`, verifyAuthorization, readById)
+  .get(`/${controller}/name/:name_engineer`, verifyAuthorization, readByName)
+  .get(`/${controller}/company/:name_company`, verifyAuthorization, readByCompany)
+  .get(`/${controller}/trash`, verifyAuthorization, readTrash)
+  .get(`/${controller}/sort/name`, verifyAuthorization, readAllSortByName)
+  .get(`/${controller}/sort/skill`, verifyAuthorization, readAllSortBySkill)
+  .get(`/${controller}/sort/updated`, verifyAuthorization, readAllSortByUpdatedAt)
+  .put(`/${controller}/id/:id_engineer`, verifyAuthorization, updateById)
+  .delete(`/${controller}/id/:id_engineer`, verifyAuthorization, deleteDataById)
+  .put(`/${controller}/del/:id_engineer`, verifyAuthorization, softDeleteDataById)
 
 module.exports = Router

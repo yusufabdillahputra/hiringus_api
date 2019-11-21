@@ -1,3 +1,5 @@
+require('dotenv/config')
+
 module.exports = {
 
   response: (res, status, resultModel) => {
@@ -22,6 +24,10 @@ module.exports = {
       result.message = resultModel
     }
     return res.status(result.status).json(result)
+  },
+
+  dotEnv: (ENV) => {
+    return process.env[ENV]
   }
 
 }

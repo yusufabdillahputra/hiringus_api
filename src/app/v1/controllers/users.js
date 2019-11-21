@@ -1,4 +1,4 @@
-const { response } = require('../../../helper/response')
+const { response, dotEnv } = require('../../../helper/response')
 const usersModel = require('../models/users')
 
 module.exports = {
@@ -6,6 +6,29 @@ module.exports = {
   createData: async (req, res) => {
     try {
       const result = await usersModel.createData(req.body)
+      const privileged = await usersModel.readPrivileged(result.insertId)
+      if (privileged[0].access_users === 1) {
+        const rules = await usersModel.createRules(privileged[0].id_users, dotEnv('RULES_ROOT'))
+        response(res, 200, {
+          result: result,
+          privileged: privileged,
+          rules: rules
+        })
+      } if (privileged[0].access_users === 2) {
+        const rules = await usersModel.createRules(privileged[0].id_users, dotEnv('RULES_ADMIN'))
+        response(res, 200, {
+          result: result,
+          privileged: privileged,
+          rules: rules
+        })
+      } if (privileged[0].access_users === 3) {
+        const rules = await usersModel.createRules(privileged[0].id_users, dotEnv('RULES_PARTNER'))
+        response(res, 200, {
+          result: result,
+          privileged: privileged,
+          rules: rules
+        })
+      }
       response(res, 200, result)
     } catch (error) {
       console.log(error)

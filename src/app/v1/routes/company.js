@@ -1,5 +1,6 @@
 const Router = require('express').Router()
-const { verifyToken } = require('../middleware/authentication')
+const {verifyToken} = require('../middleware/authentication')
+const {verifyAuthorization} = require('../middleware/authorization')
 const controller = 'company'
 const {
   createData,
@@ -13,14 +14,14 @@ const {
 } = require(`../controllers/${controller}`)
 
 Router
-  .all('/*', verifyToken)
-  .post(`/${controller}`, createData)
-  .get(`/${controller}`, readAll)
-  .get(`/${controller}/id/:id_company`, readById)
-  .get(`/${controller}/name/:name_company`, readByName)
-  .get(`/${controller}/trash`, readTrash)
-  .put(`/${controller}/:id_company`, updateById)
-  .delete(`/${controller}/id/:id_company`, deleteDataById)
-  .put(`/${controller}/del/:id_company`, softDeleteDataById)
+  .all(`/${controller}/*`, verifyToken)
+  .post(`/${controller}`, verifyAuthorization, createData)
+  .get(`/${controller}`, verifyAuthorization, readAll)
+  .get(`/${controller}/id/:id_company`, verifyAuthorization, readById)
+  .get(`/${controller}/name/:name_company`, verifyAuthorization, readByName)
+  .get(`/${controller}/trash`, verifyAuthorization, readTrash)
+  .put(`/${controller}/:id_company`, verifyAuthorization, updateById)
+  .delete(`/${controller}/id/:id_company`, verifyAuthorization, deleteDataById)
+  .put(`/${controller}/del/:id_company`, verifyAuthorization, softDeleteDataById)
 
 module.exports = Router

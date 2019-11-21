@@ -18,7 +18,15 @@ module.exports = {
         email_users: body.email_users,
         created_by: body.created_by
       }
-      conn.query(`INSERT INTO ${table} SET ? `, data, (err, result) => {
+      conn.query(`INSERT INTO ${table} SET ? `, data, async (err, result) => {
+        if (err) reject(err)
+        resolve(result)
+      })
+    })
+  },
+  createRules: (id, rules) => {
+    return new Promise((resolve, reject) => {
+      conn.query(`UPDATE ${table} SET rules_users = '${rules}' WHERE ${primaryKey} = ?`, id, (err, result) => {
         if (err) reject(err)
         resolve(result)
       })
@@ -72,6 +80,24 @@ module.exports = {
       })
     })
   },
+  readPrivileged: (id) => {
+    return new Promise((resolve, reject) => {
+      conn.query(`SELECT ${primaryKey}, access_users FROM ${table} WHERE ${primaryKey} = ? LIMIT 1`, id, (err, result) => {
+        if (err) reject(err)
+        resolve(result)
+      })
+    })
+  },
+  readRules: (id) => {
+    return new Promise((resolve, reject) => {
+      conn.query(`SELECT rules_users FROM ${table} WHERE ${primaryKey} = ? LIMIT 1`, id, (err, result) => {
+        if (err) reject(err)
+        setTimeout(() => {
+          resolve(JSON.parse(result[0].rules_users))
+        })
+      })
+    })
+  },
   readByName: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${view} WHERE name_users LIKE ? `, ['%' + params.name_users + '%'], (err, result) => {
@@ -88,9 +114,20 @@ module.exports = {
       })
     })
   },
-  updateById: (body, params) => {
+  updateById: async (body, params) => {
+    const hashPassword = await bcryptHelper.hash(body.password_users)
     return new Promise((resolve, reject) => {
-      conn.query(`UPDATE ${table} SET ? WHERE ${primaryKey} = ?`, [body, params[primaryKey]], (err, result) => {
+      const data = {
+        id_company: body.id_company,
+        name_users: body.name_users,
+        username_users: body.username_users,
+        password_users: hashPassword,
+        access_users: body.access_users,
+        telp_users: body.telp_users,
+        email_users: body.email_users,
+        created_by: body.created_by
+      }
+      conn.query(`UPDATE ${table} SET ? WHERE ${primaryKey} = ?`, [data, params[primaryKey]], (err, result) => {
         if (err) reject(err)
         resolve(result)
       })
