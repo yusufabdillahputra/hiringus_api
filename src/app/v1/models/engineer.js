@@ -68,7 +68,6 @@ module.exports = {
       })
     })
   }
-
   // readTrash: () => {
   //   try {
   //     return 'ok'

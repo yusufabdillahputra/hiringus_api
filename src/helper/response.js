@@ -14,6 +14,9 @@ module.exports = {
     } if (status === 403) {
       result.status = status
       result.message = resultModel
+    } if (status === 406) {
+      result.status = status
+      result.message = resultModel
     }
     return res.status(result.status).json(result)
   }

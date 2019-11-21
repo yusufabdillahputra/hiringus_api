@@ -22,7 +22,31 @@ module.exports = {
   },
   readByLogin: (body) => {
     return new Promise((resolve, reject) => {
-      conn.query(`SELECT ${primaryKey}, name_users, access_users FROM ${view} WHERE username_users = ? AND password_users = ? LIMIT 1`, [body.username_users, body.password_users], (err, result) => {
+      conn.query(`SELECT ${primaryKey}, username_users, name_users, access_users, remember_token FROM ${view} WHERE username_users = ? AND password_users = ? LIMIT 1`, [body.username_users, body.password_users], (err, result) => {
+        if (err) reject(new Error(err))
+        resolve(result)
+      })
+    })
+  },
+  createRememberToken: (token, id) => {
+    return new Promise((resolve, reject) => {
+      conn.query(`UPDATE ${table} SET remember_token = ? WHERE ${primaryKey} = ?`, [token, id], (err, result) => {
+        if (err) reject(new Error(err))
+        resolve(result)
+      })
+    })
+  },
+  readRememberToken: (params) => {
+    return new Promise((resolve, reject) => {
+      conn.query(`SELECT remember_token FROM ${view} WHERE ? LIMIT 1`, params, (err, result) => {
+        if (err) reject(new Error(err))
+        resolve(result[0].remember_token)
+      })
+    })
+  },
+  destroyRememberToken: (id) => {
+    return new Promise((resolve, reject) => {
+      conn.query(`UPDATE ${table} SET remember_token = NULL WHERE ${primaryKey} = ?`, id, (err, result) => {
         if (err) reject(new Error(err))
         resolve(result)
       })

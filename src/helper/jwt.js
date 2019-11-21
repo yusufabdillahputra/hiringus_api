@@ -5,28 +5,19 @@ const { response } = require('./response')
 
 module.exports = {
 
-  getToken: (res, payload) => {
-    const token = JWT.sign(payload, JWT_SECRET_KEY, {
+  getToken: async (res, payload) => {
+    return await JWT.sign(payload, JWT_SECRET_KEY, {
       expiresIn: '24h'
     })
-    response(res, 200, token)
   },
 
-  verifyToken: (req, res, next) => {
+  verifyToken: async (req, res, next) => {
     const token = req.headers.jwt
-    JWT.verify(token, JWT_SECRET_KEY, (error) => {
+    await JWT.verify(token, JWT_SECRET_KEY, (error) => {
       if (error && error.name === 'TokenExpiredError') response(res, 401, error)
       if (error && error.name === 'JsonWebTokenError') response(res, 401, error)
       next()
     })
   },
-
-  completeToken: (req, res) => {
-    const token = req.headers.jwt
-    JWT.decode(token, {
-      complete: true
-    })
-    response(res, 200, `${token} JWT destroyed and successfully logout`)
-  }
 
 }
