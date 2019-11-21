@@ -6,7 +6,7 @@ module.exports = {
   createData: (body) => {
     return new Promise((resolve, reject) => {
       conn.query(`INSERT INTO ${table} SET ? `, body, (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -14,7 +14,7 @@ module.exports = {
   readAll: () => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${table}`, (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -22,7 +22,7 @@ module.exports = {
   readById: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${table} WHERE ? `, params, (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -30,7 +30,7 @@ module.exports = {
   readByName: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${table} WHERE name_skill LIKE ? `, ['%' + params.name_skill + '%'], (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -38,7 +38,7 @@ module.exports = {
   updateById: (body, params) => {
     return new Promise((resolve, reject) => {
       conn.query(`UPDATE ${table} SET ? WHERE ${primaryKey} = ?`, [body, params[primaryKey]], (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -46,7 +46,7 @@ module.exports = {
   deleteDataById: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`DELETE FROM ${table} WHERE ${primaryKey} = ?`, params[primaryKey], (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })

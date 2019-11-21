@@ -5,8 +5,8 @@ const { response } = require('./response')
 
 module.exports = {
 
-  getToken: async (res, payload) => {
-    return await JWT.sign(payload, JWT_SECRET_KEY, {
+  getToken: (res, payload) => {
+    return JWT.sign(payload, JWT_SECRET_KEY, {
       expiresIn: '24h'
     })
   },
@@ -18,6 +18,6 @@ module.exports = {
       if (error && error.name === 'JsonWebTokenError') response(res, 401, error)
       next()
     })
-  },
+  }
 
 }

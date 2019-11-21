@@ -1,13 +1,25 @@
+const bcryptHelper = require('../../../helper/bcrypt')
 const conn = require('../../../config/database')
 const table = 'tbl_users'
 const view = 'vw_users'
 const primaryKey = 'id_users'
 
 module.exports = {
-  createData: (body) => {
+  createData: async (body) => {
+    const hashPassword = await bcryptHelper.hash(body.password_users)
     return new Promise((resolve, reject) => {
-      conn.query(`INSERT INTO ${table} SET ? `, body, (err, result) => {
-        if (err) reject(new Error(err))
+      const data = {
+        id_company: body.id_company,
+        name_users: body.name_users,
+        username_users: body.username_users,
+        password_users: hashPassword,
+        access_users: body.access_users,
+        telp_users: body.telp_users,
+        email_users: body.email_users,
+        created_by: body.created_by
+      }
+      conn.query(`INSERT INTO ${table} SET ? `, data, (err, result) => {
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -15,15 +27,15 @@ module.exports = {
   readAll: () => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${view}`, (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
   },
   readByLogin: (body) => {
     return new Promise((resolve, reject) => {
-      conn.query(`SELECT ${primaryKey}, username_users, name_users, access_users, remember_token FROM ${view} WHERE username_users = ? AND password_users = ? LIMIT 1`, [body.username_users, body.password_users], (err, result) => {
-        if (err) reject(new Error(err))
+      conn.query(`SELECT ${primaryKey}, username_users, password_users, name_users, access_users, remember_token FROM ${view} WHERE username_users = ? LIMIT 1`, body.username_users, (err, result) => {
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -31,7 +43,7 @@ module.exports = {
   createRememberToken: (token, id) => {
     return new Promise((resolve, reject) => {
       conn.query(`UPDATE ${table} SET remember_token = ? WHERE ${primaryKey} = ?`, [token, id], (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -39,7 +51,7 @@ module.exports = {
   readRememberToken: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT remember_token FROM ${view} WHERE ? LIMIT 1`, params, (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result[0].remember_token)
       })
     })
@@ -47,7 +59,7 @@ module.exports = {
   destroyRememberToken: (id) => {
     return new Promise((resolve, reject) => {
       conn.query(`UPDATE ${table} SET remember_token = NULL WHERE ${primaryKey} = ?`, id, (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -55,7 +67,7 @@ module.exports = {
   readById: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${view} WHERE ? `, params, (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -63,7 +75,7 @@ module.exports = {
   readByName: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${view} WHERE name_users LIKE ? `, ['%' + params.name_users + '%'], (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -71,7 +83,7 @@ module.exports = {
   readByCompany: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${view} WHERE name_company LIKE ?`, ['%' + params.name_company + '%'], (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -79,7 +91,7 @@ module.exports = {
   updateById: (body, params) => {
     return new Promise((resolve, reject) => {
       conn.query(`UPDATE ${table} SET ? WHERE ${primaryKey} = ?`, [body, params[primaryKey]], (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -87,7 +99,7 @@ module.exports = {
   deleteDataById: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`DELETE FROM ${table} WHERE ${primaryKey} = ?`, params[primaryKey], (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })

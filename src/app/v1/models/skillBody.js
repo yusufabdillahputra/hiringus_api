@@ -6,7 +6,7 @@ module.exports = {
   createData: (body) => {
     return new Promise((resolve, reject) => {
       conn.query(`INSERT INTO ${table} (id_skill, id_engineer, created_by, created_at) VALUES ? `, [body], (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -14,7 +14,7 @@ module.exports = {
   readAll: () => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${view}`, (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -22,7 +22,7 @@ module.exports = {
   readById: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${view} WHERE ? `, params, (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -30,7 +30,7 @@ module.exports = {
   readByEngineer: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${view} WHERE name_engineer LIKE ? `, ['%' + params.name_engineer + '%'], (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -38,7 +38,7 @@ module.exports = {
   readBySkill: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${view} WHERE name_skill LIKE ? `, ['%' + params.name_skill + '%'], (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
@@ -46,7 +46,7 @@ module.exports = {
   deleteDataByEngineer: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`DELETE FROM ${table} WHERE id_engineer = ?`, params.id_engineer, (err, result) => {
-        if (err) reject(new Error(err))
+        if (err) reject(err)
         resolve(result)
       })
     })
