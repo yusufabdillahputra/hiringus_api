@@ -1,6 +1,7 @@
 require('dotenv/config')
 const JWT = require('jsonwebtoken')
 const logModel = require('../app/v1/models/log')
+const usersModel = require('../app/v1/models/users')
 
 module.exports = {
 
@@ -8,19 +9,33 @@ module.exports = {
     if (log) {
       const token = req.headers.jwt
       const id = await JWT.decode(token, { complete: true }).payload.id_users
-      const dataLog = {
-        id_users: id,
-        status_log: status,
-        module_log: req.path.replace('/', ''),
-        controller_log : req.route.stack[1].name,
-        description_log : result.message
+      const rememberToken = await usersModel.readRememberToken(id)
+      if (rememberToken !== null) {
+        if (rememberToken !== token) {
+          const resultResponse = {}
+          resultResponse.status = 406
+          resultResponse.result = 'Your token is not acceptable'
+          return res.status(resultResponse.status).json(resultResponse)
+        } if (rememberToken === token) {
+          const dataLog = {
+            id_users: id,
+            status_log: status,
+            module_log: req.path.split('/')[1],
+            controller_log: req.route.stack[1].name,
+            description_log: result.message
+          }
+          await logModel.createData(dataLog)
+          const resultResponse = {}
+          resultResponse.status = status
+          resultResponse.result = result
+          return res.status(resultResponse.status).json(resultResponse)
+        }
+      } else {
+        const resultResponse = {}
+        resultResponse.status = 401
+        resultResponse.result = 'Your token is not authorized'
+        return res.status(resultResponse.status).json(resultResponse)
       }
-      await logModel.createData(dataLog)
-
-      const resultResponse = {}
-      resultResponse.status = status
-      resultResponse.result = result
-      return res.status(resultResponse.status).json(resultResponse)
     } else {
       const resultResponse = {}
       resultResponse.status = status

@@ -1,6 +1,6 @@
 const Router = require('express').Router()
-const {verifyToken} = require('../middleware/authentication')
-const {verifyAuthorization} = require('../middleware/authorization')
+const { verifyToken } = require('../middleware/authentication')
+const { verifyAuthorization } = require('../middleware/authorization')
 const controller = 'engineer'
 const {
   createData,

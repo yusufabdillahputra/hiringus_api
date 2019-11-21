@@ -11,13 +11,31 @@ module.exports = {
       })
     })
   },
-  readAll: () => {
-    return new Promise((resolve, reject) => {
-      conn.query(`SELECT * FROM ${table}`, (err, result) => {
-        if (err) reject(err)
-        resolve(result)
+  readAll: (query) => {
+    if (query.limit) {
+      if (query.offset) {
+        return new Promise((resolve, reject) => {
+          conn.query(`SELECT * FROM ${table} LIMIT ${query.limit} OFFSET ${query.offset}`, (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+          })
+        })
+      } else {
+        return new Promise((resolve, reject) => {
+          conn.query(`SELECT * FROM ${table} LIMIT ${query.limit}`, (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+          })
+        })
+      }
+    } else {
+      return new Promise((resolve, reject) => {
+        conn.query(`SELECT * FROM ${table}`, (err, result) => {
+          if (err) reject(err)
+          resolve(result)
+        })
       })
-    })
+    }
   },
   readById: (params) => {
     return new Promise((resolve, reject) => {
@@ -27,13 +45,31 @@ module.exports = {
       })
     })
   },
-  readByName: (params) => {
-    return new Promise((resolve, reject) => {
-      conn.query(`SELECT * FROM ${table} WHERE name_skill LIKE ? `, ['%' + params.name_skill + '%'], (err, result) => {
-        if (err) reject(err)
-        resolve(result)
+  readByName: (params, query) => {
+    if (query.limit) {
+     if (query.offset) {
+       return new Promise((resolve, reject) => {
+         conn.query(`SELECT * FROM ${table} WHERE name_skill LIKE ? LIMIT ${query.limit} OFFSET ${query.offset}`, ['%' + params.name_skill + '%'], (err, result) => {
+           if (err) reject(err)
+           resolve(result)
+         })
+       })
+     } else {
+       return new Promise((resolve, reject) => {
+         conn.query(`SELECT * FROM ${table} WHERE name_skill LIKE ? LIMIT ${query.limit} `, ['%' + params.name_skill + '%'], (err, result) => {
+           if (err) reject(err)
+           resolve(result)
+         })
+       })
+     }
+    } else {
+      return new Promise((resolve, reject) => {
+        conn.query(`SELECT * FROM ${table} WHERE name_skill LIKE ? `, ['%' + params.name_skill + '%'], (err, result) => {
+          if (err) reject(err)
+          resolve(result)
+        })
       })
-    })
+    }
   },
   updateById: (body, params) => {
     return new Promise((resolve, reject) => {

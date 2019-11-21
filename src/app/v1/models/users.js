@@ -32,13 +32,31 @@ module.exports = {
       })
     })
   },
-  readAll: () => {
-    return new Promise((resolve, reject) => {
-      conn.query(`SELECT * FROM ${view}`, (err, result) => {
-        if (err) reject(err)
-        resolve(result)
+  readAll: (query = null) => {
+    if (query.limit) {
+      if (query.offset) {
+        return new Promise((resolve, reject) => {
+          conn.query(`SELECT * FROM ${view} LIMIT ${query.limit} OFFSET ${query.offset}`, (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+          })
+        })
+      } else {
+        return new Promise((resolve, reject) => {
+          conn.query(`SELECT * FROM ${view} LIMIT ${query.limit}`, (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+          })
+        })
+      }
+    } else {
+      return new Promise((resolve, reject) => {
+        conn.query(`SELECT * FROM ${view}`, (err, result) => {
+          if (err) reject(err)
+          resolve(result)
+        })
       })
-    })
+    }
   },
   readByLogin: (body) => {
     return new Promise((resolve, reject) => {
@@ -74,7 +92,7 @@ module.exports = {
   },
   readById: (params) => {
     return new Promise((resolve, reject) => {
-      conn.query(`SELECT * FROM ${view} WHERE ? `, params, (err, result) => {
+      conn.query(`SELECT * FROM ${view} WHERE ? LIMIT 1`, params, (err, result) => {
         if (err) reject(err)
         resolve(result)
       })
@@ -98,21 +116,57 @@ module.exports = {
       })
     })
   },
-  readByName: (params) => {
-    return new Promise((resolve, reject) => {
-      conn.query(`SELECT * FROM ${view} WHERE name_users LIKE ? `, ['%' + params.name_users + '%'], (err, result) => {
-        if (err) reject(err)
-        resolve(result)
+  readByName: (params, query) => {
+    if (query.limit) {
+      if (query.offset) {
+        return new Promise((resolve, reject) => {
+          conn.query(`SELECT * FROM ${view} WHERE name_users LIKE ? LIMIT ${query.limit} OFFSET ${query.offset}`, ['%' + params.name_users + '%'], (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+          })
+        })
+      } else {
+        return new Promise((resolve, reject) => {
+          conn.query(`SELECT * FROM ${view} WHERE name_users LIKE ? LIMIT ${query.limit}`, ['%' + params.name_users + '%'], (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+          })
+        })
+      }
+    } else {
+      return new Promise((resolve, reject) => {
+        conn.query(`SELECT * FROM ${view} WHERE name_users LIKE ? `, ['%' + params.name_users + '%'], (err, result) => {
+          if (err) reject(err)
+          resolve(result)
+        })
       })
-    })
+    }
   },
-  readByCompany: (params) => {
-    return new Promise((resolve, reject) => {
-      conn.query(`SELECT * FROM ${view} WHERE name_company LIKE ?`, ['%' + params.name_company + '%'], (err, result) => {
-        if (err) reject(err)
-        resolve(result)
+  readByCompany: (params, query) => {
+    if (query.limit) {
+      if (query.offset) {
+        return new Promise((resolve, reject) => {
+          conn.query(`SELECT * FROM ${view} WHERE name_company LIKE ? LIMIT ${query.limit} OFFSET ${query.offset}`, ['%' + params.name_company + '%'], (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+          })
+        })
+      } else {
+        return new Promise((resolve, reject) => {
+          conn.query(`SELECT * FROM ${view} WHERE name_company LIKE ? LIMIT ${query.limit}`, ['%' + params.name_company + '%'], (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+          })
+        })
+      }
+    } else {
+      return new Promise((resolve, reject) => {
+        conn.query(`SELECT * FROM ${view} WHERE name_company LIKE ?`, ['%' + params.name_company + '%'], (err, result) => {
+          if (err) reject(err)
+          resolve(result)
+        })
       })
-    })
+    }
   },
   updateById: async (body, params) => {
     const hashPassword = await bcryptHelper.hash(body.password_users)

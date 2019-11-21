@@ -15,7 +15,7 @@ module.exports = {
 
   readAll: async (req, res) => {
     try {
-      const result = await engineerModel.readAll()
+      const result = await engineerModel.readAll(req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)
@@ -35,7 +35,7 @@ module.exports = {
 
   readByName: async (req, res) => {
     try {
-      const result = await engineerModel.readByName(req.params)
+      const result = await engineerModel.readByName(req.params, req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)
@@ -45,7 +45,7 @@ module.exports = {
 
   readByCompany: async (req, res) => {
     try {
-      const result = await engineerModel.readByCompany(req.params)
+      const result = await engineerModel.readByCompany(req.params, req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)
@@ -95,7 +95,7 @@ module.exports = {
 
   readAllSortByName: async (req, res) => {
     try {
-      const result = await engineerModel.readAllSortBy('name_engineer')
+      const result = await engineerModel.readAllSortBy('name_engineer', req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)
@@ -105,7 +105,7 @@ module.exports = {
 
   readAllSortBySkill: async (req, res) => {
     try {
-      const result = await engineerModel.readAllSortByBodySkill('name_skill')
+      const result = await engineerModel.readAllSortByBodySkill('name_skill', req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)
@@ -115,7 +115,7 @@ module.exports = {
 
   readAllSortByUpdatedAt: async (req, res) => {
     try {
-      const result = await engineerModel.readAllSortBy('updated_at')
+      const result = await engineerModel.readAllSortBy('updated_at', req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)

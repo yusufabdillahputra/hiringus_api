@@ -38,7 +38,7 @@ module.exports = {
 
   readAll: async (req, res) => {
     try {
-      const result = await usersModel.readAll()
+      const result = await usersModel.readAll(req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)
@@ -58,7 +58,7 @@ module.exports = {
 
   readByName: async (req, res) => {
     try {
-      const result = await usersModel.readByName(req.params)
+      const result = await usersModel.readByName(req.params, req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)
@@ -68,7 +68,7 @@ module.exports = {
 
   readByCompany: async (req, res) => {
     try {
-      const result = await usersModel.readByCompany(req.params)
+      const result = await usersModel.readByCompany(req.params, req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)

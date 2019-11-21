@@ -4,7 +4,7 @@ const view = 'vw_log'
 
 module.exports = {
 
-  createData : (body) => {
+  createData: (body) => {
     return new Promise((resolve, reject) => {
       conn.query(`INSERT INTO ${table} SET ? `, body, (err, result) => {
         if (err) reject(err)
@@ -12,7 +12,7 @@ module.exports = {
       })
     })
   },
-  readAll : () => {
+  readAll: () => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${view}`, (err, result) => {
         if (err) reject(err)
@@ -28,7 +28,7 @@ module.exports = {
       })
     })
   },
-  readByNameUsers : (params) => {
+  readByNameUsers: (params) => {
     return new Promise((resolve, reject) => {
       conn.query(`SELECT * FROM ${view} WHERE name_users LIKE ? `, ['%' + params.name_users + '%'], (err, result) => {
         if (err) reject(err)

@@ -16,7 +16,7 @@ module.exports = {
 
   readHeaderAll: async (req, res) => {
     try {
-      const result = await skillHeaderModel.readAll()
+      const result = await skillHeaderModel.readAll(req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)
@@ -36,7 +36,7 @@ module.exports = {
 
   readHeaderByName: async (req, res) => {
     try {
-      const result = await skillHeaderModel.readByName(req.params)
+      const result = await skillHeaderModel.readByName(req.params, req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)
@@ -98,7 +98,7 @@ module.exports = {
 
   readBodyAll: async (req, res) => {
     try {
-      const result = await skillBodyModel.readAll()
+      const result = await skillBodyModel.readAll(req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)
@@ -108,7 +108,7 @@ module.exports = {
 
   readBodyByEngineer: async (req, res) => {
     try {
-      const result = await skillBodyModel.readByEngineer(req.params)
+      const result = await skillBodyModel.readByEngineer(req.params, req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)
@@ -118,7 +118,7 @@ module.exports = {
 
   readBodyBySkill: async (req, res) => {
     try {
-      const result = await skillBodyModel.readBySkill(req.params)
+      const result = await skillBodyModel.readBySkill(req.params, req.query)
       response(req, res, 200, result)
     } catch (error) {
       console.log(error)
