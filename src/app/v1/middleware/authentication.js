@@ -11,12 +11,12 @@ module.exports = {
     const rememberToken = await usersModel.readRememberToken(id)
     if (rememberToken !== null) {
       if (rememberToken !== token) {
-        response(res, 406, 'Your token is not acceptable')
+        response(req, res, 406, 'Your token is not acceptable')
       } if (rememberToken === token) {
         await jwtHelper.verifyToken(req, res, next)
       }
     } else {
-      response(res, 401, 'Your token is not authorized')
+      response(req, res, 401, 'Your token is not authorized')
     }
   }
 

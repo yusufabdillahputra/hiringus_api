@@ -6,9 +6,9 @@ module.exports = {
   get: async (req, res) => {
     try {
       const result = await homeModel.get('Selamat Datang Yusuf Abdillah Putra')
-      response(res, 200, result)
+      response(req, res, 200, result, false)
     } catch (error) {
-      response(res, 500, error)
+      response(req, res, 500, error, false)
     }
   }
 

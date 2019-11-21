@@ -15,7 +15,7 @@ module.exports = {
     if (detectRuleAuto === 1) {
       next()
     } if (detectRuleAuto === 0) {
-      response(res, 401, {
+      response(req, res, 401, {
         message: 'Your account not authorities'
       })
     }
