@@ -1,4 +1,4 @@
-const { response } = require('../../../helper/response')
+const { responseWithoutHeader } = require('../../../helper/response')
 const homeModel = require('../models/home')
 
 module.exports = {
@@ -6,9 +6,9 @@ module.exports = {
   get: async (req, res) => {
     try {
       const result = await homeModel.get('Selamat Datang Yusuf Abdillah Putra')
-      response(req, res, 200, result, false)
+      responseWithoutHeader(res, 200, result)
     } catch (error) {
-      response(req, res, 500, error, false)
+      responseWithoutHeader(res, 500, error)
     }
   }
 

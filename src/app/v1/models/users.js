@@ -74,9 +74,9 @@ module.exports = {
       })
     })
   },
-  readRememberToken: (params) => {
+  readRememberToken: (id) => {
     return new Promise((resolve, reject) => {
-      conn.query(`SELECT remember_token FROM ${view} WHERE ? LIMIT 1`, params, (err, result) => {
+      conn.query(`SELECT remember_token FROM ${view} WHERE ${primaryKey} = ? LIMIT 1`, id, (err, result) => {
         if (err) reject(err)
         resolve(result[0].remember_token)
       })
