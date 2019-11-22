@@ -5,8 +5,8 @@ const usersModel = require('../app/v1/models/users')
 
 module.exports = {
 
-  response: async (req, res, status, result, log = true) => {
-    if (log) {
+  responses: async (req, res, status, result, log = true) => {
+    if (log === true) {
       const token = req.headers.jwt
       const decode = await JWT.decode(token, {complete: true})
       if (decode !== null) {
@@ -44,12 +44,18 @@ module.exports = {
         resultResponse.result = 'Your token is not authorized'
         return res.status(resultResponse.status).json(resultResponse)
       }
-    } else {
+    } if (log === false) {
       const resultResponse = {}
       resultResponse.status = status
       resultResponse.result = result
       return res.status(resultResponse.status).json(resultResponse)
     }
+  },
+  response: async (req, res, status, result) => {
+    const resultResponse = {}
+    resultResponse.status = status
+    resultResponse.result = result
+    return res.status(resultResponse.status).json(resultResponse)
   },
 
   dotEnv: (ENV) => {

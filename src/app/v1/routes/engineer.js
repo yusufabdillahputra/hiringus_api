@@ -18,7 +18,7 @@ const {
 } = require(`../controllers/${controller}`)
 
 Router
-  .all(`/${controller}*`, verifyToken)
+  .all(`/${controller}/*`, verifyToken)
   .post(`/${controller}`, verifyAuthorization, createData)
   .get(`/${controller}`, verifyAuthorization, readAll)
   .get(`/${controller}/id/:id_engineer`, verifyAuthorization, readById)

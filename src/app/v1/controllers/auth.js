@@ -1,7 +1,7 @@
 const JWT = require('jsonwebtoken')
 const { response } = require('../../../helper/response')
 const jwtHelper = require('../../../helper/jwt')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const usersController = require('../controllers/users')
 const usersModel = require('../models/users')
 

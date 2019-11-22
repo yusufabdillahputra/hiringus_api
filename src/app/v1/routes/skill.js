@@ -18,7 +18,7 @@ const {
 } = require(`../controllers/${controller}`)
 
 Router
-  .all(`/${controller}*`, verifyToken)
+  .all(`/${controller}/*`, verifyToken)
   .post(`/${controller}/head`, verifyAuthorization, createHeaderData)
   .get(`/${controller}/head`, verifyAuthorization, readHeaderAll)
   .get(`/${controller}/head/id/:id_skill`, verifyAuthorization, readHeaderById)
