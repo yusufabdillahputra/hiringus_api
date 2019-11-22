@@ -1,23 +1,40 @@
-# Foobar
+# Hiring Us RESTful API
 
-Foobar is a Python library for dealing with word pluralization.
+Hiring Us is a sandbox RESTfull API for project at Arkademy Bootcamp Bogor Batch 13 using Express JS.
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the package manager [npm](https://nodejs.org/en/download/) to install dependencies.
 
 ```bash
-pip install foobar
+npm install
 ```
 
-## Usage
+## Dependencies
+* [bcrypt](https://www.npmjs.com/package/bcrypt)
 
-```python
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
+```bcrypt
+npm install bcrypt
+```
+* [dotenv](https://www.npmjs.com/package/dotenv)
+```dotenv
+npm install dotenv
+```
+* [express](https://expressjs.com/en/starter/installing.html)
+```
+npm install express --save
+```
+* [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+```
+npm install jsonwebtoken
+```
+* [mysql](https://www.npmjs.com/package/mysql)
+```
+npm install mysql
+```
+* [x-xss-protection](https://www.npmjs.com/package/x-xss-protection)
+```
+npm i x-xss-protection
 ```
 
 ## Contributing
@@ -26,4 +43,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[ISC](https://choosealicense.com/licenses/isc/)
