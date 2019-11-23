@@ -1,6 +1,6 @@
 const { responseWithoutHeader, responseWithHeader, dotEnv } = require('../../../helper/response')
+const { axiosPost } = require('../../../helper/axios')
 const usersModel = require('../models/users')
-const logModel = require('../models/log')
 
 module.exports = {
 
@@ -10,6 +10,7 @@ module.exports = {
       const privileged = await usersModel.readPrivileged(result.insertId)
       if (privileged[0].access_users === 1) {
         const rules = await usersModel.createRules(privileged[0].id_users, dotEnv('RULES_ROOT'))
+
         const dataLog = {
           id_users: privileged[0].id_users,
           status_log: 200,
@@ -17,7 +18,7 @@ module.exports = {
           controller_log: 'createData',
           description_log: 'Success'
         }
-        await logModel.createData(dataLog)
+        await axiosPost('/log', dataLog)
 
         responseWithoutHeader(res, 200, {
           result: result,
@@ -26,6 +27,7 @@ module.exports = {
         })
       } if (privileged[0].access_users === 2) {
         const rules = await usersModel.createRules(privileged[0].id_users, dotEnv('RULES_ADMIN'))
+
         const dataLog = {
           id_users: privileged[0].id_users,
           status_log: 200,
@@ -33,7 +35,7 @@ module.exports = {
           controller_log: 'createData',
           description_log: 'Success'
         }
-        await logModel.createData(dataLog)
+        await axiosPost('/log', dataLog)
 
         responseWithoutHeader(res, 200, {
           result: result,
@@ -50,7 +52,7 @@ module.exports = {
           controller_log: 'createData',
           description_log: 'Success'
         }
-        await logModel.createData(dataLog)
+        await axiosPost('/log', dataLog)
 
         responseWithoutHeader(res, 200, {
           result: result,

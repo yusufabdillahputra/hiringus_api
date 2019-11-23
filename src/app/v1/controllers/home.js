@@ -1,12 +1,15 @@
 const { responseWithoutHeader } = require('../../../helper/response')
-const homeModel = require('../models/home')
+const { axiosGet } = require('../../../helper/axios')
 
 module.exports = {
 
-  get: async (req, res) => {
+  landing: async (req, res) => {
     try {
-      const result = await homeModel.get('Selamat Datang Yusuf Abdillah Putra')
-      responseWithoutHeader(res, 200, result)
+      const axiosLogHome = await axiosGet('/')
+      responseWithoutHeader(res, axiosLogHome.data.status, {
+        serviceApi: 'stable',
+        serviceLog: axiosLogHome.data.result
+      })
     } catch (error) {
       responseWithoutHeader(res, 500, error)
     }

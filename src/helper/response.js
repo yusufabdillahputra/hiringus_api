@@ -1,7 +1,7 @@
 require('dotenv/config')
 const JWT = require('jsonwebtoken')
-const logModel = require('../app/v1/models/log')
-const usersModel = require('../app/v1/models/users')
+const { axiosPost } = require('./axios')
+const usersModel = require(`../app/v${process.env.API_VERSION}/models/users`)
 
 module.exports = {
 
@@ -25,7 +25,8 @@ module.exports = {
             controller_log: req.route.stack[1].name,
             description_log: result.message
           }
-          await logModel.createData(dataLog)
+          await axiosPost('/log', dataLog)
+
           const resultResponse = {}
           resultResponse.status = status
           resultResponse.result = result

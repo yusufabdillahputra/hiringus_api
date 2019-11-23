@@ -1,10 +1,10 @@
 const JWT = require('jsonwebtoken')
 const { responseWithoutHeader } = require('../../../helper/response')
+const { axiosPost } = require('../../../helper/axios')
 const jwtHelper = require('../../../helper/jwt')
 const bcrypt = require('bcryptjs')
 const usersController = require('../controllers/users')
 const usersModel = require('../models/users')
-const logModel = require('../models/log')
 
 module.exports = {
 
@@ -32,7 +32,7 @@ module.exports = {
               controller_log: 'signIn',
               description_log: token
             }
-            await logModel.createData(dataLog)
+            await axiosPost('/log', dataLog)
 
             responseWithoutHeader(res, 200, {
               token: token,
@@ -69,7 +69,7 @@ module.exports = {
         controller_log: 'signOut',
         description_log: 'Succesfully destroy JWT and logout'
       }
-      await logModel.createData(dataLog)
+      await axiosPost('/log', dataLog)
 
       responseWithoutHeader(res, 200, {
         model: model,
