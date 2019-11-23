@@ -7,7 +7,7 @@ module.exports = {
 
   responseWithHeader: async (req, res, status, result) => {
     const token = req.headers.jwt
-    const decode = await JWT.decode(token, {complete: true})
+    const decode = await JWT.decode(token, { complete: true })
     if (decode !== null) {
       const rememberToken = await usersModel.readRememberToken(decode.payload.id_users)
       if (rememberToken !== null) {

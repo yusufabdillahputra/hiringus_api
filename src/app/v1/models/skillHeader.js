@@ -47,21 +47,21 @@ module.exports = {
   },
   readByName: (params, query) => {
     if (query.limit) {
-     if (query.offset) {
-       return new Promise((resolve, reject) => {
-         conn.query(`SELECT * FROM ${table} WHERE name_skill LIKE ? LIMIT ${query.limit} OFFSET ${query.offset}`, ['%' + params.name_skill + '%'], (err, result) => {
-           if (err) reject(err)
-           resolve(result)
-         })
-       })
-     } else {
-       return new Promise((resolve, reject) => {
-         conn.query(`SELECT * FROM ${table} WHERE name_skill LIKE ? LIMIT ${query.limit} `, ['%' + params.name_skill + '%'], (err, result) => {
-           if (err) reject(err)
-           resolve(result)
-         })
-       })
-     }
+      if (query.offset) {
+        return new Promise((resolve, reject) => {
+          conn.query(`SELECT * FROM ${table} WHERE name_skill LIKE ? LIMIT ${query.limit} OFFSET ${query.offset}`, ['%' + params.name_skill + '%'], (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+          })
+        })
+      } else {
+        return new Promise((resolve, reject) => {
+          conn.query(`SELECT * FROM ${table} WHERE name_skill LIKE ? LIMIT ${query.limit} `, ['%' + params.name_skill + '%'], (err, result) => {
+            if (err) reject(err)
+            resolve(result)
+          })
+        })
+      }
     } else {
       return new Promise((resolve, reject) => {
         conn.query(`SELECT * FROM ${table} WHERE name_skill LIKE ? `, ['%' + params.name_skill + '%'], (err, result) => {

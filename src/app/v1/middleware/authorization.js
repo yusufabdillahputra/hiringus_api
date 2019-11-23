@@ -31,7 +31,6 @@ module.exports = {
         message: 'Your token is empty, please login or register'
       })
     }
-
   }
 
 }
